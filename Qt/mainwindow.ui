@@ -43,7 +43,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QtEmuGL" name="widget" native="true"/>
+     <widget class="MainUI" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
@@ -726,9 +726,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QtEmuGL</class>
+   <class>MainUI</class>
    <extends>QWidget</extends>
-   <header>qtemugl.h</header>
+   <header>base/QtMain.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

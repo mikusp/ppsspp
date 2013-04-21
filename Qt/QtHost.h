@@ -3,23 +3,20 @@
 
 #include <QObject>
 #include "../Core/Host.h"
-#include "mainwindow.h"
 
-#include "base/NativeApp.h"
 #include "file/vfs.h"
 #include "file/zip_read.h"
 #include "gfx_es2/gl_state.h"
 #include "gfx/texture.h"
-#include "input/input_state.h"
 #include "math/math_util.h"
 #include "base/mutex.h"
 #include "math/lin/matrix4x4.h"
-#include <QGLWidget>
+#include "mainwindow.h"
 
 // Globals
 static PMixer *g_mixer;
 static QString fileToStart;
-static QtEmuGL* glWindow;
+//static QtEmuGL* glWindow;
 
 class QtHost : public QObject, public Host
 {

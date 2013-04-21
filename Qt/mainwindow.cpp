@@ -18,7 +18,7 @@
 #include "GPU/GPUInterface.h"
 
 #include "QtHost.h"
-#include "EmuThread.h"
+//#include "EmuThread.h"
 
 // TODO: Make this class thread-aware. Can't send events to a different thread. Currently only works on X11.
 // Needs to use QueuedConnection for signals/slots.
@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	host = new QtHost(this);
 	emugl = ui->widget;
-	emugl->init(&input_state);
+	//emugl->init(&input_state);
 	emugl->resize(pixel_xres, pixel_yres);
 	emugl->setMinimumSize(pixel_xres, pixel_yres);
 	emugl->setMaximumSize(pixel_xres, pixel_yres);
@@ -58,9 +58,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	SetGameTitle(fileToStart);
 
-	connect(&timer, SIGNAL(timeout()), this, SLOT(Update()));
-	timer.setInterval(0);
-	timer.start();
+//	connect(&timer, SIGNAL(timeout()), this, SLOT(Update()));
+//	timer.setInterval(0);
+//	timer.start();
 
 //	if (!fileToStart.isNull())
 //	{
@@ -84,17 +84,17 @@ void MainWindow::ShowMemory(u32 addr)
 
 void MainWindow::Update()
 {
-	emugl->updateGL();
+//	emugl->updateGL();
 
-	for (int i = 0; i < controllistCount; i++)
-	{
-		if (pressedKeys.contains(controllist[i].key) ||
-				input_state.pad_buttons_down & controllist[i].emu_id)
-			__CtrlButtonDown(controllist[i].psp_id);
-		else
-			__CtrlButtonUp(controllist[i].psp_id);
-	}
-	__CtrlSetAnalog(input_state.pad_lstick_x, input_state.pad_lstick_y);
+//	for (int i = 0; i < controllistCount; i++)
+//	{
+//		if (pressedKeys.contains(controllist[i].key) ||
+//				input_state.pad_buttons_down & controllist[i].emu_id)
+//			__CtrlButtonDown(controllist[i].psp_id);
+//		else
+//			__CtrlButtonUp(controllist[i].psp_id);
+//	}
+//	__CtrlSetAnalog(input_state.pad_lstick_x, input_state.pad_lstick_y);
 
 	if (lastUIState != globalUIState) {
 		lastUIState = globalUIState;
@@ -228,7 +228,7 @@ void MainWindow::Boot()
 void MainWindow::CoreEmitWait(bool isWaiting)
 {
 	// Unlock mutex while core is waiting;
-	EmuThread_LockDraw(!isWaiting);
+//	EmuThread_LockDraw(!isWaiting);
 }
 
 void MainWindow::on_action_FileLoad_triggered()

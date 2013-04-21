@@ -61,7 +61,7 @@ void QtHost::SetWindowTitle(const char *message)
 
 void QtHost::UpdateUI()
 {
-	mainWindow->UpdateMenus();
+	mainWindow->Update();
 }
 
 
