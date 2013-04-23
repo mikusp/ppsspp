@@ -18,7 +18,6 @@
 #include "GPU/GPUInterface.h"
 
 #include "QtHost.h"
-#include "EmuThread.h"
 
 // TODO: Make this class thread-aware. Can't send events to a different thread. Currently only works on X11.
 // Needs to use QueuedConnection for signals/slots.
@@ -29,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	dialogDisasm(0),
 	memoryWindow(0),
 	memoryTexWindow(0),
-	timer(this),
 	displaylistWindow(0),
 	lastUIState(UISTATE_MENU)
 {
@@ -41,12 +39,11 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
 	host = new QtHost(this);
-	emugl = ui->widget;
-	emugl->init(&input_state);
-	emugl->resize(pixel_xres, pixel_yres);
-	emugl->setMinimumSize(pixel_xres, pixel_yres);
-	emugl->setMaximumSize(pixel_xres, pixel_yres);
-	QObject::connect( emugl, SIGNAL(doubleClick()), this, SLOT(on_action_OptionsFullScreen_triggered()) );
+	mainui = ui->widget;
+	mainui->resize(pixel_xres, pixel_yres);
+	mainui->setMinimumSize(pixel_xres, pixel_yres);
+	mainui->setMaximumSize(pixel_xres, pixel_yres);
+	//QObject::connect( emugl, SIGNAL(doubleClick()), this, SLOT(on_action_OptionsFullScreen_triggered()) );
 
 	createLanguageMenu();
 	UpdateMenus();
@@ -57,10 +54,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	SetZoom(zoom);
 
 	SetGameTitle(fileToStart);
-
-	connect(&timer, SIGNAL(timeout()), this, SLOT(Update()));
-	timer.setInterval(0);
-	timer.start();
 
 //	if (!fileToStart.isNull())
 //	{
@@ -84,7 +77,7 @@ void MainWindow::ShowMemory(u32 addr)
 
 void MainWindow::Update()
 {
-	emugl->updateGL();
+	//emugl->updateGL();
 
 	for (int i = 0; i < controllistCount; i++)
 	{
@@ -228,7 +221,7 @@ void MainWindow::Boot()
 void MainWindow::CoreEmitWait(bool isWaiting)
 {
 	// Unlock mutex while core is waiting;
-	EmuThread_LockDraw(!isWaiting);
+	//EmuThread_LockDraw(!isWaiting);
 }
 
 void MainWindow::on_action_FileLoad_triggered()
@@ -608,8 +601,8 @@ void MainWindow::on_action_OptionsFullScreen_triggered()
 		ui->statusbar->setVisible(false);
 
 		// Remove constraint
-		emugl->setMinimumSize(0, 0);
-		emugl->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+		mainui->setMinimumSize(0, 0);
+		mainui->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 		ui->centralwidget->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 		setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 
@@ -755,9 +748,9 @@ void MainWindow::SetZoom(float zoom) {
 	dp_xres = pixel_xres;
 	dp_yres = pixel_yres;
 
-	emugl->resize(pixel_xres, pixel_yres);
-	emugl->setMinimumSize(pixel_xres, pixel_yres);
-	emugl->setMaximumSize(pixel_xres, pixel_yres);
+	mainui->resize(pixel_xres, pixel_yres);
+	mainui->setMinimumSize(pixel_xres, pixel_yres);
+	mainui->setMaximumSize(pixel_xres, pixel_yres);
 
 	ui->centralwidget->setFixedSize(pixel_xres, pixel_yres);
 	ui->centralwidget->resize(pixel_xres, pixel_yres);

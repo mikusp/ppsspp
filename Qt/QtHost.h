@@ -19,7 +19,6 @@
 // Globals
 static PMixer *g_mixer;
 static QString fileToStart;
-static QtEmuGL* glWindow;
 
 class QtHost : public QObject, public Host
 {

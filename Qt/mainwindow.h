@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QTranslator>
-#include <QTimer>
 #include "Core/Core.h"
 #include "input/input_state.h"
 #include "debugger_disasm.h"
@@ -12,8 +11,8 @@
 #include "debugger_displaylist.h"
 #include "controls.h"
 #include "gamepaddialog.h"
+#include "base/MainUI.h"
 
-class QtEmuGL;
 namespace Ui {
 class MainWindow;
 }
@@ -21,7 +20,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
     explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
@@ -151,8 +150,7 @@ private:
 
 	Ui::MainWindow *ui;
 
-	QtEmuGL *emugl;
-	QTimer timer;
+	MainUI *mainui;
 	CoreState nextState;
 	InputState input_state;
 	GlobalUIState lastUIState;

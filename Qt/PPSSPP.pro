@@ -33,8 +33,10 @@ linux {
 }
 
 # Main
-SOURCES += ../native/base/QtMain.cpp
-HEADERS += ../native/base/QtMain.h
+SOURCES += ../native/base/QtMain.cpp \
+    ../native/base/MainUI.cpp
+HEADERS += ../native/base/QtMain.h \
+    ../native/base/MainUI.h
 
 # Native
 SOURCES += ../UI/EmuScreen.cpp \
